@@ -1,0 +1,20 @@
+@startuml
+title OAuth Authentication Flow between React and Spring Boot
+
+actor User
+
+User -> React: 1. Requests login page
+React --> User: 2. Sends login page
+
+User -> React: 3. Enters login credentials
+React -> SpringBoot: 4. Sends login request with credentials
+
+SpringBoot -> React: 5. Sends OAuth redirect to OAuth server
+React -> OAuthServer: 6. Sends OAuth request with authorization code
+
+OAuthServer --> React: 7. Sends access token and refresh token
+React -> SpringBoot: 8. Sends access token with each request
+
+SpringBoot -> React: 9. Sends response with requested data
+
+@enduml
