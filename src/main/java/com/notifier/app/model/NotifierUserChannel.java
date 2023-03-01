@@ -32,7 +32,7 @@ public class NotifierUserChannel {
         this.id = id;
     }
 
-    @JsonBackReference
+    @JsonBackReference(value = "getNotifierUser")
     public NotifierUser getNotifierUser() {
         return notifierUser;
     }
@@ -41,7 +41,7 @@ public class NotifierUserChannel {
         this.notifierUser = notifierUser;
     }
 
-    @JsonBackReference
+    @JsonBackReference(value = "getChannel")
     public Channel getChannel() {
         return channel;
     }

@@ -2,25 +2,30 @@ package com.notifier.app.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name="message")
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="message_type_id")
     private MessageType messageType;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="notifier_user_id")
     private NotifierUser user;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="channel_id")
     private Channel channel;
+
+    private Timestamp createdAt;
+    private String sessionId;
 
     private String body;
 
@@ -56,21 +61,41 @@ public class Message {
         this.body = body;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Message() {
     }
 
-    public Message(int idType, int user, Channel channel, String body) {
-//        this.idType = idType;
+    //@TODO Testing purposes only. To be removed.
+    public Message(String body) {
+        MessageType messageType = new MessageType(1L);
+        this.messageType = messageType;
         this.user = new NotifierUser("foo", "foo@email.com");
-//        this.channel = channel;
+        Channel channel = new Channel(1L);
+        this.channel = channel;
         this.body = body;
     }
 }

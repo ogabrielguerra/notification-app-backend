@@ -2,41 +2,113 @@ package com.notifier.app.service;
 
 import com.notifier.app.model.Message;
 
-public class MessageServiceImpl implements MessageService{
+import java.util.Date;
 
-    public boolean sendByEmail(Message message){
-        try{
-            return true;
-        }catch (Exception e){
+import com.notifier.app.model.repository.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 
-        }
-        return false;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.Timestamp;
+
+public class MessageServiceImpl implements MessageService {
+
+    @Value("${topics.default}")
+    private String defaultTopic;
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
+    Logger logger = Logger.getLogger(MessageServiceImpl.class.getName());
+
+    final
+    MessageRepository messageRepository;
+
+    public MessageServiceImpl(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
-    public boolean sendBySMS(Message message){
-        try{
-            return true;
-        }catch (Exception e){
-
+    public ResponseEntity sendMessage(Message message) {
+        try {
+            int messageTypeId = Math.toIntExact(message.getMessageType().getId());
+            switch (messageTypeId) {
+                case 1:
+                    sendByEmail(message);
+                    break;
+                case 2:
+                    sendBySMS(message);
+                    break;
+                case 3:
+                    //This is a fallback for STOMPMessageController, which is a preferable way to send Push Notifications
+                    sendByPush(message);
+                    break;
+            }
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
         }
-        return false;
+        return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    public boolean sendByPush(Message message){
-        try{
+    private boolean sendByEmail(Message message) {
+        try {
+            logger.log(Level.INFO, "Sending message through Email");
             logMessageSentInDatabase(message);
             return true;
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
         }
         return false;
     }
 
-    private boolean logMessageSentInDatabase(Message message){
-        try{
+    private boolean sendBySMS(Message message) {
+        try {
+            logger.log(Level.INFO, "Sending message through SMS");
+            logMessageSentInDatabase(message);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
+        }
+        return false;
+    }
 
+    public boolean sendByPush(StompHeaderAccessor accessor, Message message) {
+        String sessionId = accessor.getSessionId();
+        message.setSessionId(sessionId);
+
+        try {
+            logMessageSentInDatabase(message);
+            logger.log(Level.INFO, "Sending message through Push");
+            return true;
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean sendByPush(Message message) {
+        try {
+            simpMessagingTemplate.convertAndSend(defaultTopic, message);
+            logMessageSentInDatabase(message);
+            return true;
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean logMessageSentInDatabase(Message message) {
+        Date date = new Date();
+        message.setCreatedAt(new Timestamp(date.getTime()));
+        try {
+            messageRepository.save(message);
+            return true;
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage());
         }
         return false;
     }

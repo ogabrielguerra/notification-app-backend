@@ -8,14 +8,14 @@ public class MessageType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="message_type_id")
-    private int id;
+    private Long id;
     private String name;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -24,6 +24,18 @@ public class MessageType {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public MessageType() {
+    }
+
+    public MessageType(Long id) {
+        this.id = id;
+    }
+
+    public MessageType(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 }

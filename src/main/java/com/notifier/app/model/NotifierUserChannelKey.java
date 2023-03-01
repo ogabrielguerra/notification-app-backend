@@ -6,23 +6,23 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class NotifierUserChannelKey {
     @Column(name = "notifier_user_id")
-    private int notifierUserId;
+    private Long notifierUserId;
     @Column(name = "channel_id")
-    private int channelId;
+    private Long channelId;
 
-    public int getNotifierUserId() {
+    public Long getNotifierUserId() {
         return notifierUserId;
     }
 
-    public void setNotifierUserId(int notifierUserId) {
+    public void setNotifierUserId(Long notifierUserId) {
         this.notifierUserId = notifierUserId;
     }
 
-    public int getChannelId() {
+    public Long getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(int channelId) {
+    public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
 

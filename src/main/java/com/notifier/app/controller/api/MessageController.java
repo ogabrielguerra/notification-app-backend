@@ -2,10 +2,9 @@ package com.notifier.app.controller.api;
 
 import com.notifier.app.model.Message;
 import com.notifier.app.model.repository.MessageRepository;
-import com.notifier.app.model.NotifierUser;
 import com.notifier.app.service.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,43 +23,24 @@ public class MessageController {
         this.messageRepository = messageRepository;
     }
 
-    @PostMapping("/save")
-    public String save() throws InterruptedException {
-        Message message = new Message();
-        message.setUser(new NotifierUser("foo", "foo@email.com"));
-        message.setBody("Foo");
-        messageRepository.save(message);
-        return "saved";
-    }
-
     @GetMapping("/")
     public List<Message> message() {
-        return messageRepository.findAll();
+        return messageRepository.findAllByOrderByIdDesc();
     }
 
     @GetMapping("/channel/{id}")
-    public List<Message> messagesByChannel(@PathVariable int id) {
+    public List<Message> messagesByChannel(@PathVariable Long id) {
         return messageRepository.findAllByChannelId(id);
     }
 
     @GetMapping("/user/{id}")
-    public List<Message> messagesByUser(@PathVariable int id) {
+    public List<Message> messagesByUser(@PathVariable Long id) {
         return messageRepository.findAllByUserId(id);
     }
 
-    @PostMapping("/send/email")
-    public void sendMessageByEmail(@RequestBody Message message){
-        messageService.sendByEmail(message);
+    @PostMapping("/send")
+    public ResponseEntity sendMessage(@RequestBody Message message){
+        return messageService.sendMessage(message);
     }
 
-    @PostMapping("/send/sms")
-    public void sendMessageBySMS(@RequestBody Message message){
-        messageService.sendBySMS(message);
-    }
-
-    @PostMapping("/send/push")
-    public void sendMessageByPush(StompHeaderAccessor accessor, Message message){
-        //This is a fallback for STOMPMessageController, which is a preferable way to send Push Notifications
-        messageService.sendByPush(message);
-    }
 }

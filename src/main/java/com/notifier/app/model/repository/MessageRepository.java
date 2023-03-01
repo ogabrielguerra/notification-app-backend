@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, String> {
-    List<Message> findAllByChannelId(int id);
+    List<Message> findAllByChannelId(Long id);
 
-    List<Message> findAllByUserId(int id);
+    List<Message> findAllByUserId(Long id);
 
-    List<Message> findAll();
+    List<Message> findAllByOrderByIdDesc();
 }
