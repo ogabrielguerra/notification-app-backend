@@ -10,6 +10,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     Set<UserCategory> userCategories;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<UserChannel> userChannels;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -67,5 +71,13 @@ public class User {
 
     public void setUserCategories(Set<UserCategory> userCategories) {
         this.userCategories = userCategories;
+    }
+
+    public Set<UserChannel> getUserChannels() {
+        return userChannels;
+    }
+
+    public void setUserChannels(Set<UserChannel> userChannels) {
+        this.userChannels = userChannels;
     }
 }

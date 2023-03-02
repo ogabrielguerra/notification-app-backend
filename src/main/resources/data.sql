@@ -20,3 +20,11 @@ insert into user_category (category_id, notifier_user_id) values (3, 1);
 insert into user_category (category_id, notifier_user_id) values (1, 2);
 insert into user_category (category_id, notifier_user_id) values (2, 3);
 insert into user_category (category_id, notifier_user_id) values (3, 3);
+
+-- SUBSCRIBED CHANNELS
+insert into user_channel (channel_id, notifier_user_id) values (1, 1);
+insert into user_channel (channel_id, notifier_user_id) values (2, 1);
+insert into user_channel (channel_id, notifier_user_id) values (3, 1);
+insert into user_channel (channel_id, notifier_user_id) values (1, 2);
+insert into user_channel (channel_id, notifier_user_id) values (2, 2);
+insert into user_channel (channel_id, notifier_user_id) values (3, 3);

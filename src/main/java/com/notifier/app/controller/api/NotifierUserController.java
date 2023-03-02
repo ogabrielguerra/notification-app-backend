@@ -25,9 +25,14 @@ public class NotifierUserController {
         return notifierUserRepository.findAll();
     }
 
+    @GetMapping("/category/{id}")
+    public List<User> usersByCategory(@PathVariable int id) {
+        return notifierUserRepository.findAllByUserCategories_CategoryId(id);
+    }
+
     @GetMapping("/channel/{id}")
     public List<User> usersByChannel(@PathVariable int id) {
-        return notifierUserRepository.findAllByUserCategories_CategoryId(id);
+        return notifierUserRepository.findAllByUserChannels_ChannelId(id);
     }
 
 }

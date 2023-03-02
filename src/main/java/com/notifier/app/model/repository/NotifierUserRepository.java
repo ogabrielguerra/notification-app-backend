@@ -10,4 +10,6 @@ public interface NotifierUserRepository extends JpaRepository<User, String> {
     List<User> findAll();
 
     List<User> findAllByUserCategories_CategoryId(int id);
+
+    List<User> findAllByUserChannels_ChannelId(int id);
 }
