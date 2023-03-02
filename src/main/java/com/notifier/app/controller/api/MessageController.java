@@ -4,6 +4,7 @@ import com.notifier.app.model.Message;
 import com.notifier.app.model.repository.MessageRepository;
 import com.notifier.app.service.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class MessageController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity sendMessage(@RequestBody Message message){
+    public ResponseEntity<HttpStatus> sendMessage(@RequestBody Message message) {
         return messageService.sendMessage(message);
     }
 

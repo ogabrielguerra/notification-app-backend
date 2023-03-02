@@ -20,7 +20,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Value("${cors.urls}")
-    List corsUrls;
+    List<String> corsUrls;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/csrf").permitAll()
                         .requestMatchers("/secure").denyAll())
                 .authorizeHttpRequests()
-                .requestMatchers("/v3/api-docs/**","/swagger-ui/**").permitAll();
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll();
         return http.build();
     }
 

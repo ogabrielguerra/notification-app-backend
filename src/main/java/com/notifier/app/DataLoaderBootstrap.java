@@ -9,19 +9,16 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataLoaderBootstrap  implements ApplicationListener<ContextRefreshedEvent> {
+public class DataLoaderBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private DataLoader dataLoader;
-    private final ApplicationContext applicationContext;
     final MessageRepository messageRepository;
 
     @Autowired
     public DataLoaderBootstrap(ApplicationContext applicationContext, MessageRepository messageRepository) {
-        this.applicationContext = applicationContext;
         this.messageRepository = messageRepository;
     }
 
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        this.dataLoader = new DataLoader(messageRepository);
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        new DataLoader(messageRepository);
     }
 }

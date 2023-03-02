@@ -25,7 +25,4 @@ public class NotifierUserChannelKey {
     public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
-
-    public NotifierUserChannelKey() {
-    }
 }

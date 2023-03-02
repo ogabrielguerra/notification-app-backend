@@ -5,23 +5,23 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="message")
+@Table(name = "message")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
-    @JoinColumn(name="message_type_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "message_type_id")
     private MessageType messageType;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
-    @JoinColumn(name="notifier_user_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "notifier_user_id")
     private NotifierUser user;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
-    @JoinColumn(name="channel_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "channel_id")
     private Channel channel;
 
     private Timestamp createdAt;
@@ -69,7 +69,6 @@ public class Message {
         this.id = id;
     }
 
-
     public String getSessionId() {
         return sessionId;
     }
@@ -84,18 +83,5 @@ public class Message {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Message() {
-    }
-
-    //@TODO Testing purposes only. To be removed.
-    public Message(String body) {
-        MessageType messageType = new MessageType(1L);
-        this.messageType = messageType;
-        this.user = new NotifierUser("foo", "foo@email.com");
-        Channel channel = new Channel(1L);
-        this.channel = channel;
-        this.body = body;
     }
 }

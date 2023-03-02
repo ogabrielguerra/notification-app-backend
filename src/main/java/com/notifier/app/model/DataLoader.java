@@ -6,28 +6,25 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class DataLoader {
 
     final MessageRepository messageRepository;
     private List<String> bodyList;
+    private Random random;
 
     public DataLoader(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
-
+        this.random = new Random();
         setMessages();
-
-        for(int i=0; i<5; i++){
-            Message message = messageBuilder(1L);
-            messageRepository.save(message);
-        }
-        for(int i=0; i<5; i++){
-            Message message = messageBuilder(2L);
+        for (int i = 0; i < 30; i++) {
+            Message message = messageBuilder((long) getRandomNumberFromRange(1, 4));
             messageRepository.save(message);
         }
     }
 
-    private void setMessages(){
+    private void setMessages() {
         this.bodyList = new ArrayList<>();
         this.bodyList.add("Hey, what's up?");
         this.bodyList.add("Did you see the last episode from our Podcast?");
@@ -47,10 +44,10 @@ public class DataLoader {
         this.bodyList.add("NBA is going to halt all contracts which are not compliant with the new rules.");
     }
 
-    private Message messageBuilder(Long userId){
+    private Message messageBuilder(Long userId) {
         Message message = new Message();
-        message.setMessageType(new MessageType((long) getRandomNumberFromRange(1,3)));
-        message.setChannel(new Channel((long) getRandomNumberFromRange(1,3)));
+        message.setMessageType(new MessageType((long) getRandomNumberFromRange(1, 4)));
+        message.setChannel(new Channel((long) getRandomNumberFromRange(1, 4)));
         message.setSessionId("xGhjsyg");
         message.setUser(new NotifierUser(userId));
         message.setBody(getRandomMessageBody());
@@ -59,12 +56,12 @@ public class DataLoader {
         return message;
     }
 
-    private String getRandomMessageBody(){
+    private String getRandomMessageBody() {
         return this.bodyList.get(getRandomNumberFromRange(0, bodyList.size()));
     }
 
-    private int getRandomNumberFromRange(int min, int max){
-        return (int) ((Math.random() * (max - min)) + min);
+    private int getRandomNumberFromRange(int min, int max) {
+        return random.nextInt(min, max);
     }
 
 }

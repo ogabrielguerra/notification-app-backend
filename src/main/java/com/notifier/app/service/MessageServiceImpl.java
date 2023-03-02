@@ -1,9 +1,6 @@
 package com.notifier.app.service;
 
 import com.notifier.app.model.Message;
-
-import java.util.Date;
-
 import com.notifier.app.model.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,27 +9,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.Timestamp;
 
 public class MessageServiceImpl implements MessageService {
 
+    final
+    MessageRepository messageRepository;
+    Logger logger = Logger.getLogger(MessageServiceImpl.class.getName());
     @Value("${topics.default}")
     private String defaultTopic;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    Logger logger = Logger.getLogger(MessageServiceImpl.class.getName());
-
-    final
-    MessageRepository messageRepository;
-
     public MessageServiceImpl(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
-    public ResponseEntity sendMessage(Message message) {
+    public ResponseEntity<HttpStatus> sendMessage(Message message) {
         try {
             int messageTypeId = Math.toIntExact(message.getMessageType().getId());
             switch (messageTypeId) {
@@ -42,16 +38,16 @@ public class MessageServiceImpl implements MessageService {
                 case 2:
                     sendBySMS(message);
                     break;
-                case 3:
+                default:
                     //This is a fallback for STOMPMessageController, which is a preferable way to send Push Notifications
                     sendByPush(message);
                     break;
             }
-            return new ResponseEntity(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.log(Level.INFO, e.getMessage());
         }
-        return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     private boolean sendByEmail(Message message) {
@@ -112,5 +108,4 @@ public class MessageServiceImpl implements MessageService {
         }
         return false;
     }
-
 }
