@@ -22,8 +22,4 @@ insert into notifier_user_channel (channel_id, notifier_user_id) values (2, 3);
 insert into notifier_user_channel (channel_id, notifier_user_id) values (3, 3);
 
 -- MESSAGES
---insert into message (id, message_type_id, channel_id, notifier_user_id, body) values ((next value for message_seq), 1, 1, 1, 'Finance message body 1');
---insert into message (id, message_type_id, channel_id, notifier_user_id, body) values ((next value for message_seq), 1, 1, 2, 'Finance message body 2');
---insert into message (id, message_type_id, channel_id, notifier_user_id, body) values ((next value for message_seq), 1, 2, 1, 'Sports message body 1');
---insert into message (id, message_type_id, channel_id, notifier_user_id, body) values ((next value for message_seq), 1, 2, 2, 'Sports message body 2');
---alter sequence message_seq restart with 5;
+-- It's being handled by DataLoaderBootstrap

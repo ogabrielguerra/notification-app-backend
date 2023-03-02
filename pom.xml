@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.notifier</groupId>
-    <artifactId>app</artifactId>
+    <artifactId>notifier-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>app</name>
     <description>Notifier App Backend</description>
