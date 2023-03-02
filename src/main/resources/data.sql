@@ -14,9 +14,9 @@ insert into notifier_user (id, name, email, phone_number) values (2, 'Ryu', 'ryu
 insert into notifier_user (id, name, email, phone_number) values (3, 'Bram Stoker', 'bramstocker@dracula.com', '+5521999998765');
 
 -- SUBSCRIBED CHANNELS
-insert into notifier_user_category (category_id, notifier_user_id) values (1, 1);
-insert into notifier_user_category (category_id, notifier_user_id) values (2, 1);
-insert into notifier_user_category (category_id, notifier_user_id) values (3, 1);
-insert into notifier_user_category (category_id, notifier_user_id) values (1, 2);
-insert into notifier_user_category (category_id, notifier_user_id) values (2, 3);
-insert into notifier_user_category (category_id, notifier_user_id) values (3, 3);
+insert into user_category (category_id, notifier_user_id) values (1, 1);
+insert into user_category (category_id, notifier_user_id) values (2, 1);
+insert into user_category (category_id, notifier_user_id) values (3, 1);
+insert into user_category (category_id, notifier_user_id) values (1, 2);
+insert into user_category (category_id, notifier_user_id) values (2, 3);
+insert into user_category (category_id, notifier_user_id) values (3, 3);

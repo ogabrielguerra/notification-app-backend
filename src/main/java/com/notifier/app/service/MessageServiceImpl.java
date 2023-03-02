@@ -1,7 +1,7 @@
 package com.notifier.app.service;
 
 import com.notifier.app.model.Message;
-import com.notifier.app.model.NotifierUser;
+import com.notifier.app.model.User;
 import com.notifier.app.model.repository.MessageRepository;
 import com.notifier.app.model.repository.NotifierUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class MessageServiceImpl implements MessageService {
 
     public ResponseEntity<HttpStatus> sendMessage(Message message) {
         try {
-            List<NotifierUser> users = notifierUserRepository.findAllByUserCategories_CategoryId(1);
+            List<User> users = notifierUserRepository.findAllByUserCategories_CategoryId(1);
             users.forEach((user)-> notifyUser(user, message));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
         return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    private boolean notifyUser(NotifierUser user, Message message){
+    private boolean notifyUser(User user, Message message){
         return true;
     }
 

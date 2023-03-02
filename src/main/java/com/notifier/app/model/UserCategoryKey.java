@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class NotifierUserCategoryKey {
+public class UserCategoryKey {
     @Column(name = "notifier_user_id")
     private Long notifierUserId;
     @Column(name = "category_id")

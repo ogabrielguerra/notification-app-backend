@@ -4,36 +4,36 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-public class NotifierUserCategory {
+public class UserCategory {
 
     @EmbeddedId
-    NotifierUserCategoryKey id;
+    UserCategoryKey id;
 
     @ManyToOne
     @MapsId("id")
     @JoinColumn(name = "notifier_user_id")
-    NotifierUser notifierUser;
+    User user;
 
     @ManyToOne
     @MapsId("id")
     @JoinColumn(name = "category_id")
     Category category;
 
-    public NotifierUserCategoryKey getId() {
+    public UserCategoryKey getId() {
         return id;
     }
 
-    public void setId(NotifierUserCategoryKey id) {
+    public void setId(UserCategoryKey id) {
         this.id = id;
     }
 
     @JsonBackReference(value = "getNotifierUser")
-    public NotifierUser getNotifierUser() {
-        return notifierUser;
+    public User getNotifierUser() {
+        return user;
     }
 
-    public void setNotifierUser(NotifierUser notifierUser) {
-        this.notifierUser = notifierUser;
+    public void setNotifierUser(User user) {
+        this.user = user;
     }
 
     @JsonBackReference(value = "getCategory")
