@@ -26,12 +26,12 @@ public class NotifierUserController {
     }
 
     @GetMapping("/category/{id}")
-    public List<User> usersByCategory(@PathVariable int id) {
+    public List<User> usersByCategory(@PathVariable Long id) {
         return notifierUserRepository.findAllByUserCategories_CategoryId(id);
     }
 
     @GetMapping("/channel/{id}")
-    public List<User> usersByChannel(@PathVariable int id) {
+    public List<User> usersByChannel(@PathVariable Long id) {
         return notifierUserRepository.findAllByUserChannels_ChannelId(id);
     }
 

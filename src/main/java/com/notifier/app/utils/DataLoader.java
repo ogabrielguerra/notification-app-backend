@@ -1,6 +1,10 @@
-package com.notifier.app.model;
+package com.notifier.app.utils;
 
+import com.notifier.app.model.Category;
+import com.notifier.app.model.Message;
 import com.notifier.app.model.repository.MessageRepository;
+import com.notifier.app.model.repository.NotifierUserRepository;
+import com.notifier.app.service.MessageServiceImpl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,16 +15,20 @@ import java.util.Random;
 public class DataLoader {
 
     final MessageRepository messageRepository;
+    final NotifierUserRepository notifierUserRepository;
     private List<String> bodyList;
     private Random random;
 
-    public DataLoader(MessageRepository messageRepository) {
+    public DataLoader(MessageRepository messageRepository, NotifierUserRepository notifierUserRepository) throws InterruptedException {
+        MessageServiceImpl messageService = new MessageServiceImpl(messageRepository, notifierUserRepository);
         this.messageRepository = messageRepository;
+        this.notifierUserRepository = notifierUserRepository;
         this.random = new Random();
         setMessages();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 2; i++) {
             Message message = messageBuilder((long) getRandomNumberFromRange(1, 4));
-            messageRepository.save(message);
+//            Thread.sleep(2000);
+            messageService.notify(message);
         }
     }
 
@@ -46,10 +54,7 @@ public class DataLoader {
 
     private Message messageBuilder(Long userId) {
         Message message = new Message();
-       // message.setMessageType(new Channel((long) getRandomNumberFromRange(1, 4)));
         message.setCategory(new Category((long) getRandomNumberFromRange(1, 4)));
-//        message.setSessionId("xGhjsyg");
-//        message.setUser(new User(userId));
         message.setBody(getRandomMessageBody());
         Date date = new Date();
         message.setCreatedAt(new Timestamp(date.getTime()));

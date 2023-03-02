@@ -16,6 +16,10 @@ public class Message {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "notifier_user_id")
+    private User user;
+
     private Timestamp createdAt;
 
     private String body;
@@ -42,6 +46,14 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Timestamp getCreatedAt() {

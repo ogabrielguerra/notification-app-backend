@@ -18,6 +18,9 @@ public class MessageLog {
     private Long notifierUserId;
     private Timestamp createdAt;
 
+    public MessageLog() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -56,8 +59,5 @@ public class MessageLog {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public MessageLog() {
     }
 }

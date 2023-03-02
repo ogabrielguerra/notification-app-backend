@@ -13,8 +13,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${topics.default}")
-    private String defaultTopic;
+    @Value("${stomp.endpoints.default}")
+    private String defaultEndpoint;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -24,7 +24,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(defaultTopic).setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint(defaultEndpoint).setAllowedOriginPatterns("*").withSockJS();
     }
 
     @Bean
