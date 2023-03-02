@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)

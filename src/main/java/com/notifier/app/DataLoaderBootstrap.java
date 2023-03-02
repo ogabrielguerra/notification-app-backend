@@ -19,6 +19,6 @@ public class DataLoaderBootstrap implements ApplicationListener<ContextRefreshed
     }
 
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        new DataLoader(messageRepository);
+        //new DataLoader(messageRepository);
     }
 }
