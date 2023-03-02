@@ -9,7 +9,7 @@ import java.util.Set;
 public class NotifierUser {
 
     @OneToMany(mappedBy = "notifierUser", cascade = CascadeType.ALL)
-    Set<NotifierUserChannel> userChannels;
+    Set<NotifierUserCategory> userCategories;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -61,11 +61,11 @@ public class NotifierUser {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<NotifierUserChannel> getUserChannels() {
-        return userChannels;
+    public Set<NotifierUserCategory> getUserCategories() {
+        return userCategories;
     }
 
-    public void setUserChannels(Set<NotifierUserChannel> userChannels) {
-        this.userChannels = userChannels;
+    public void setUserCategories(Set<NotifierUserCategory> userCategories) {
+        this.userCategories = userCategories;
     }
 }

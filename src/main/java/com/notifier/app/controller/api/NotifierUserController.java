@@ -27,7 +27,7 @@ public class NotifierUserController {
 
     @GetMapping("/channel/{id}")
     public List<NotifierUser> usersByChannel(@PathVariable int id) {
-        return notifierUserRepository.findAllByUserChannels_ChannelId(id);
+        return notifierUserRepository.findAllByUserCategories_CategoryId(id);
     }
 
 }

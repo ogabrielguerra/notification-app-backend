@@ -4,15 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-public class NotifierUserChannel {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "notifier_user_channel_id")
-//    private int notifierUserChannelId;
+public class NotifierUserCategory {
 
     @EmbeddedId
-    NotifierUserChannelKey id;
+    NotifierUserCategoryKey id;
 
     @ManyToOne
     @MapsId("id")
@@ -21,14 +16,14 @@ public class NotifierUserChannel {
 
     @ManyToOne
     @MapsId("id")
-    @JoinColumn(name = "channel_id")
-    Channel channel;
+    @JoinColumn(name = "category_id")
+    Category category;
 
-    public NotifierUserChannelKey getId() {
+    public NotifierUserCategoryKey getId() {
         return id;
     }
 
-    public void setId(NotifierUserChannelKey id) {
+    public void setId(NotifierUserCategoryKey id) {
         this.id = id;
     }
 
@@ -41,12 +36,12 @@ public class NotifierUserChannel {
         this.notifierUser = notifierUser;
     }
 
-    @JsonBackReference(value = "getChannel")
-    public Channel getChannel() {
-        return channel;
+    @JsonBackReference(value = "getCategory")
+    public Category getCategory() {
+        return category;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

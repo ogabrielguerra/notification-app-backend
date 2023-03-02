@@ -13,44 +13,19 @@ public class Message {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "message_type_id")
-    private MessageType messageType;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "notifier_user_id")
-    private NotifierUser user;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "channel_id")
-    private Channel channel;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private Timestamp createdAt;
-    private String sessionId;
 
     private String body;
 
-    public MessageType getMessageType() {
-        return messageType;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
-    }
-
-    public NotifierUser getUser() {
-        return user;
-    }
-
-    public void setUser(NotifierUser user) {
-        this.user = user;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getBody() {
@@ -67,14 +42,6 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public Timestamp getCreatedAt() {

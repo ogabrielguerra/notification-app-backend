@@ -1,7 +1,9 @@
 package com.notifier.app.service;
 
 import com.notifier.app.model.Message;
+import com.notifier.app.model.NotifierUser;
 import com.notifier.app.model.repository.MessageRepository;
+import com.notifier.app.model.repository.NotifierUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,36 +21,33 @@ public class MessageServiceImpl implements MessageService {
 
     final
     MessageRepository messageRepository;
+    final
+    NotifierUserRepository notifierUserRepository;
+
     Logger logger = Logger.getLogger(MessageServiceImpl.class.getName());
     @Value("${topics.default}")
     private String defaultTopic;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    public MessageServiceImpl(MessageRepository messageRepository) {
+    public MessageServiceImpl(MessageRepository messageRepository, NotifierUserRepository notifierUserRepository) {
+        this.notifierUserRepository = notifierUserRepository;
         this.messageRepository = messageRepository;
     }
 
     public ResponseEntity<HttpStatus> sendMessage(Message message) {
         try {
-            int messageTypeId = Math.toIntExact(message.getMessageType().getId());
-            switch (messageTypeId) {
-                case 1:
-                    sendByEmail(message);
-                    break;
-                case 2:
-                    sendBySMS(message);
-                    break;
-                default:
-                    //This is a fallback for STOMPMessageController, which is a preferable way to send Push Notifications
-                    sendByPush(message);
-                    break;
-            }
+            List<NotifierUser> users = notifierUserRepository.findAllByUserCategories_CategoryId(1);
+            users.forEach((user)-> notifyUser(user, message));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             logger.log(Level.INFO, e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    private boolean notifyUser(NotifierUser user, Message message){
+        return true;
     }
 
     private boolean sendByEmail(Message message) {
@@ -74,7 +74,7 @@ public class MessageServiceImpl implements MessageService {
 
     public boolean sendByPush(StompHeaderAccessor accessor, Message message) {
         String sessionId = accessor.getSessionId();
-        message.setSessionId(sessionId);
+
 
         try {
             logMessageSentInDatabase(message);

@@ -4,11 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class NotifierUserChannelKey {
+public class NotifierUserCategoryKey {
     @Column(name = "notifier_user_id")
     private Long notifierUserId;
-    @Column(name = "channel_id")
-    private Long channelId;
+    @Column(name = "category_id")
+    private Long categoryId;
 
     public Long getNotifierUserId() {
         return notifierUserId;
@@ -18,11 +18,11 @@ public class NotifierUserChannelKey {
         this.notifierUserId = notifierUserId;
     }
 
-    public Long getChannelId() {
-        return channelId;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setChannelId(Long channelId) {
-        this.channelId = channelId;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
