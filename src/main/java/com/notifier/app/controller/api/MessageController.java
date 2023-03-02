@@ -1,5 +1,7 @@
 package com.notifier.app.controller.api;
 
+import com.notifier.app.dto.Mapper;
+import com.notifier.app.dto.MessageDTO;
 import com.notifier.app.model.Message;
 import com.notifier.app.model.repository.MessageRepository;
 import com.notifier.app.service.MessageServiceImpl;
@@ -25,13 +27,13 @@ public class MessageController {
     }
 
     @GetMapping("/")
-    public List<Message> message() {
-        return messageRepository.findAllByOrderByIdDesc();
+    public List<MessageDTO> message() {
+        List<Message> messageList = messageRepository.findAllByOrderByIdDesc();
+        return Mapper.toMessageDTOList(messageList);
     }
 
     @PostMapping("/notify")
     public ResponseEntity<HttpStatus> notify(@RequestBody Message message) {
         return messageService.notify(message);
     }
-
 }
