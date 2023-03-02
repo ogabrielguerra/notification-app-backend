@@ -46,10 +46,10 @@ public class DataLoader {
 
     private Message messageBuilder(Long userId) {
         Message message = new Message();
-        message.setMessageType(new MessageType((long) getRandomNumberFromRange(1, 4)));
-        message.setChannel(new Channel((long) getRandomNumberFromRange(1, 4)));
-        message.setSessionId("xGhjsyg");
-        message.setUser(new NotifierUser(userId));
+       // message.setMessageType(new Channel((long) getRandomNumberFromRange(1, 4)));
+        message.setCategory(new Category((long) getRandomNumberFromRange(1, 4)));
+//        message.setSessionId("xGhjsyg");
+//        message.setUser(new User(userId));
         message.setBody(getRandomMessageBody());
         Date date = new Date();
         message.setCreatedAt(new Timestamp(date.getTime()));

@@ -1,6 +1,6 @@
 package com.notifier.app.controller.api;
 
-import com.notifier.app.model.NotifierUser;
+import com.notifier.app.model.User;
 import com.notifier.app.model.repository.NotifierUserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +21,17 @@ public class NotifierUserController {
     }
 
     @GetMapping("/")
-    public List<NotifierUser> users() {
+    public List<User> users() {
         return notifierUserRepository.findAll();
     }
 
+    @GetMapping("/category/{id}")
+    public List<User> usersByCategory(@PathVariable int id) {
+        return notifierUserRepository.findAllByUserCategories_CategoryId(id);
+    }
+
     @GetMapping("/channel/{id}")
-    public List<NotifierUser> usersByChannel(@PathVariable int id) {
+    public List<User> usersByChannel(@PathVariable int id) {
         return notifierUserRepository.findAllByUserChannels_ChannelId(id);
     }
 

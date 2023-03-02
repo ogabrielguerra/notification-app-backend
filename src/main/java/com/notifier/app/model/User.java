@@ -6,10 +6,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "notifier_user")
-public class NotifierUser {
+public class User {
 
-    @OneToMany(mappedBy = "notifierUser", cascade = CascadeType.ALL)
-    Set<NotifierUserChannel> userChannels;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<UserCategory> userCategories;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<UserChannel> userChannels;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,16 +21,16 @@ public class NotifierUser {
     private String email;
     private String phoneNumber;
 
-    public NotifierUser(String name, String email) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public NotifierUser(Long id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public NotifierUser() {
+    public User() {
     }
 
     public Long getId() {
@@ -61,11 +65,19 @@ public class NotifierUser {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<NotifierUserChannel> getUserChannels() {
+    public Set<UserCategory> getUserCategories() {
+        return userCategories;
+    }
+
+    public void setUserCategories(Set<UserCategory> userCategories) {
+        this.userCategories = userCategories;
+    }
+
+    public Set<UserChannel> getUserChannels() {
         return userChannels;
     }
 
-    public void setUserChannels(Set<NotifierUserChannel> userChannels) {
+    public void setUserChannels(Set<UserChannel> userChannels) {
         this.userChannels = userChannels;
     }
 }

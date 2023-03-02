@@ -1,6 +1,7 @@
 package com.notifier.app.controller;
 
 import com.notifier.app.model.Message;
+import com.notifier.app.model.User;
 import com.notifier.app.model.repository.MessageRepository;
 import com.notifier.app.service.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class STOMPMessageController {
     @MessageMapping("/hellos")
     @SendTo("/topic/greetings")
     public Message message(StompHeaderAccessor accessor, Message message) {
-        messageService.sendByPush(accessor, message);
+        User user = new User();
+        messageService.sendByPush(accessor, user, message);
         return message;
     }
 }

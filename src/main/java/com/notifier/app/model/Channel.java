@@ -11,16 +11,16 @@ public class Channel {
     private Long id;
     private String name;
 
-    public Channel(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public Channel() {
     }
 
     public Channel(Long id) {
         this.id = id;
     }
 
-    public Channel() {
+    public Channel(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {

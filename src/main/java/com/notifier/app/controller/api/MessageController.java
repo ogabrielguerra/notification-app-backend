@@ -29,19 +29,9 @@ public class MessageController {
         return messageRepository.findAllByOrderByIdDesc();
     }
 
-    @GetMapping("/channel/{id}")
-    public List<Message> messagesByChannel(@PathVariable Long id) {
-        return messageRepository.findAllByChannelId(id);
-    }
-
-    @GetMapping("/user/{id}")
-    public List<Message> messagesByUser(@PathVariable Long id) {
-        return messageRepository.findAllByUserId(id);
-    }
-
-    @PostMapping("/send")
-    public ResponseEntity<HttpStatus> sendMessage(@RequestBody Message message) {
-        return messageService.sendMessage(message);
+    @PostMapping("/notify")
+    public ResponseEntity<HttpStatus> notify(@RequestBody Message message) {
+        return messageService.notify(message);
     }
 
 }
