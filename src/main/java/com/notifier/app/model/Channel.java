@@ -3,22 +3,22 @@ package com.notifier.app.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "message_type")
-public class MessageType {
+@Table(name = "channel")
+public class Channel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "message_type_id")
+    @Column(name = "channel_id")
     private Long id;
     private String name;
 
-    public MessageType() {
+    public Channel() {
     }
 
-    public MessageType(Long id) {
+    public Channel(Long id) {
         this.id = id;
     }
 
-    public MessageType(Long id, String name) {
+    public Channel(Long id, String name) {
         this.id = id;
         this.name = name;
     }

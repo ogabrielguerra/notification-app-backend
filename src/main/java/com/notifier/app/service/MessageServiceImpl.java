@@ -35,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public ResponseEntity<HttpStatus> sendMessage(Message message) {
+    public ResponseEntity<HttpStatus> notify(Message message) {
         try {
             List<User> users = notifierUserRepository.findAllByUserCategories_CategoryId(1);
             users.forEach((user)-> notifyUser(user, message));

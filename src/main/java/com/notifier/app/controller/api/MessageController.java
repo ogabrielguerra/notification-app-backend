@@ -30,8 +30,8 @@ public class MessageController {
     }
 
     @PostMapping("/notify")
-    public ResponseEntity<HttpStatus> sendMessage(@RequestBody Message message) {
-        return messageService.sendMessage(message);
+    public ResponseEntity<HttpStatus> notify(@RequestBody Message message) {
+        return messageService.notify(message);
     }
 
 }

@@ -5,5 +5,5 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public interface MessageService {
-    ResponseEntity<HttpStatus> sendMessage(Message message);
+    ResponseEntity<HttpStatus> notify(Message message);
 }
